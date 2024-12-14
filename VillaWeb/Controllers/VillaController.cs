@@ -40,5 +40,53 @@ namespace Villa.Web.Controllers
             }
             return View(obj);
         }
+
+        [HttpGet]
+        public IActionResult Update(int villaId)
+        {
+            Vila? obj = _db.Villas.FirstOrDefault(u => u.Id == villaId);
+            if (obj is null)
+            {
+                return RedirectToAction("Error","Home");
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        public IActionResult Update(Vila obj)
+        {
+            if (ModelState.IsValid && obj.Id>0)
+            {
+                _db.Villas.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction(nameof(Index), "Villa");
+            }
+            return View(obj);
+        }
+
+
+        [HttpGet]
+        public IActionResult Delete(int villaId)
+        {
+            Vila? obj = _db.Villas.FirstOrDefault(u => u.Id == villaId);
+            if (obj is null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Vila obj)
+        {
+            Vila? objFromDb = _db.Villas.FirstOrDefault(u=>u.Id==obj.Id);
+            if (objFromDb is not null)
+            {
+                _db.Villas.Remove(objFromDb);
+                _db.SaveChanges();
+                return RedirectToAction(nameof(Index), "Villa");
+            }
+            return View(obj);
+        }
     }
 }
