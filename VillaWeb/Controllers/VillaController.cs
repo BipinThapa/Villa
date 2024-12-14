@@ -24,6 +24,10 @@ namespace Villa.Web.Controllers
         [HttpPost]
         public IActionResult Create(Vila obj)
         {
+            if (obj.Name.Count()<1)
+            {
+                ModelState.AddModelError("Name","name cannot have single character");
+            }
             if (obj.Name==obj.Description)
             {
                 ModelState.AddModelError("","The Description cannot exactly match the Name.");
