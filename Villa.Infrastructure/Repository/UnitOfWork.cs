@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Villa.Application.Common.Interfaces;
+using Villa.Domain.Entities;
+using Villa.Infrastructure.Data;
+
+namespace Villa.Infrastructure.Repository
+{
+    public class UnitOfWork : IUnitOfWork
+    {
+        private readonly ApplicationDbContext _db;
+        public IVillaRepository Villa { get; private set; }
+        public UnitOfWork(ApplicationDbContext db)
+        {
+            _db = db;
+            Villa = new VillaRepository(_db);
+        }
+    }
+}
