@@ -18,11 +18,7 @@ namespace Villa.Infrastructure.Repository
         {
             _db = db;
         }
-
-        public void Save()
-        {
-            _db.SaveChanges();
-        }
+     
         public void Update(Vila entity)
         {
             _db.Villas.Update(entity);

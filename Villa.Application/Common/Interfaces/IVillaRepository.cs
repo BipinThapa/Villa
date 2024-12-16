@@ -11,6 +11,6 @@ namespace Villa.Application.Common.Interfaces
     public interface IVillaRepository:IRepository<Vila>
     {
         void Update(Vila entity);
-        void Save();
+       
     }
 }

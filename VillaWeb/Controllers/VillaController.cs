@@ -37,7 +37,7 @@ namespace Villa.Web.Controllers
             if (ModelState.IsValid)
             {
                 _unitOfWork.Villa.Add(obj);
-                _unitOfWork.Villa.Save();
+                _unitOfWork.Save();
                 TempData["success"] = "The Villa has been created successfully.";
                 return RedirectToAction(nameof(Index), "Villa");
             }
@@ -61,7 +61,7 @@ namespace Villa.Web.Controllers
             if (ModelState.IsValid && obj.Id>0)
             {
                 _unitOfWork.Villa.Update(obj);
-                _unitOfWork.Villa.Save();
+                _unitOfWork.Save();
                 TempData["success"] = "The Villa has been updated successfully.";
                 return RedirectToAction(nameof(Index), "Villa");
             }
@@ -87,7 +87,7 @@ namespace Villa.Web.Controllers
             if (objFromDb is not null)
             {
                 _unitOfWork.Villa.Remove(objFromDb);
-                _unitOfWork.Villa.Save();
+                _unitOfWork.Save();
                 TempData["success"]= "The Villa has been delete successfully.";
                 return RedirectToAction(nameof(Index), "Villa");
             }
