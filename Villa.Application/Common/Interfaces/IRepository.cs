@@ -13,6 +13,7 @@ namespace Villa.Application.Common.Interfaces
         //dont put update and save function bcoz, update may different with different business logic and save
         IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, string? includeProperties = null);
         T Get(Expression<Func<T, bool>> filter, string? includeProperties = null);
+        bool Any(Expression<Func<T, bool>> filter);
         void Add(T entity);
         void Remove(T entity);   
     }
