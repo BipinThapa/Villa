@@ -62,7 +62,7 @@ namespace Villa.Infrastructure.Repository
             _db.Remove(entity);
         }
 
-        public void save()
+        public void Save()
         {
             _db.SaveChanges();
         }

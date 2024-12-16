@@ -15,6 +15,6 @@ namespace Villa.Application.Common.Interfaces
         void Add(Vila entity);
         void Update(Vila entity);
         void Remove(Vila entity);
-        void save();
+        void Save();
     }
 }
