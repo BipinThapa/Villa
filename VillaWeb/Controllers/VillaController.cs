@@ -2,19 +2,20 @@
 using Villa.Application.Common.Interfaces;
 using Villa.Domain.Entities;
 using Villa.Infrastructure.Data;
+using Villa.Infrastructure.Repository;
 
 namespace Villa.Web.Controllers
 {
     public class VillaController : Controller
     {
-        private readonly IVillaRepository _villaRepo;
-        public VillaController(IVillaRepository villaRepo) {
-            _villaRepo= villaRepo;
+        private readonly IUnitOfWork _unitOfWork;
+        public VillaController(IUnitOfWork unitOfWork) {
+            _unitOfWork= unitOfWork;
         }
         [HttpGet]
         public IActionResult Index()
         {
-            var villa = _villaRepo.GetAll();
+            var villa = _unitOfWork.Villa.GetAll();
             return View(villa);
         }
         [HttpGet]
@@ -35,8 +36,8 @@ namespace Villa.Web.Controllers
             }
             if (ModelState.IsValid)
             {
-                _villaRepo.Add(obj);
-                _villaRepo.Save();
+                _unitOfWork.Villa.Add(obj);
+                _unitOfWork.Villa.Save();
                 TempData["success"] = "The Villa has been created successfully.";
                 return RedirectToAction(nameof(Index), "Villa");
             }
@@ -46,7 +47,7 @@ namespace Villa.Web.Controllers
         [HttpGet]
         public IActionResult Update(int villaId)
         {
-            Vila? obj = _villaRepo.Get(u => u.Id == villaId);
+            Vila? obj = _unitOfWork.Villa.Get(u => u.Id == villaId);
             if (obj is null)
             {
                 return RedirectToAction("Error","Home");
@@ -59,8 +60,8 @@ namespace Villa.Web.Controllers
         {
             if (ModelState.IsValid && obj.Id>0)
             {
-                _villaRepo.Update(obj);
-                _villaRepo.Save();
+                _unitOfWork.Villa.Update(obj);
+                _unitOfWork.Villa.Save();
                 TempData["success"] = "The Villa has been updated successfully.";
                 return RedirectToAction(nameof(Index), "Villa");
             }
@@ -71,7 +72,7 @@ namespace Villa.Web.Controllers
         [HttpGet]
         public IActionResult Delete(int villaId)
         {
-            Vila? obj = _villaRepo.Get(u => u.Id == villaId);
+            Vila? obj = _unitOfWork.Villa.Get(u => u.Id == villaId);
             if (obj is null)
             {
                 return RedirectToAction("Error", "Home");
@@ -82,11 +83,11 @@ namespace Villa.Web.Controllers
         [HttpPost]
         public IActionResult Delete(Vila obj)
         {
-            Vila? objFromDb = _villaRepo.Get(u=>u.Id==obj.Id);
+            Vila? objFromDb = _unitOfWork.Villa.Get(u=>u.Id==obj.Id);
             if (objFromDb is not null)
             {
-                _villaRepo.Remove(objFromDb);
-                _villaRepo.Save();
+                _unitOfWork.Villa.Remove(objFromDb);
+                _unitOfWork.Villa.Save();
                 TempData["success"]= "The Villa has been delete successfully.";
                 return RedirectToAction(nameof(Index), "Villa");
             }
