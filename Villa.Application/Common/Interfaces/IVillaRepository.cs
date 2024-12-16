@@ -8,13 +8,9 @@ using Villa.Domain.Entities;
 
 namespace Villa.Application.Common.Interfaces
 {
-    public interface IVillaRepository
+    public interface IVillaRepository:IRepository<Vila>
     {
-        IEnumerable<Vila> GetAll(Expression<Func<Vila,bool>> filter=null,string? includeProperties=null);
-        Vila Get(Expression<Func<Vila,bool>> filter, string? includeProperties = null);
-        void Add(Vila entity);
         void Update(Vila entity);
-        void Remove(Vila entity);
         void Save();
     }
 }
